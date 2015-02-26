@@ -4,8 +4,6 @@ Created on Jan 13, 2015
 @author: andreweckford
 '''
 
-# test
-
 import numpy as np
 
 def set_parameters(bigDelta, t_on, t_off):
