@@ -4,9 +4,6 @@ Created on Feb 5, 2015
 @author: andreweckford
 '''
 
-#test
-#asdf
-
 import numpy as np
 
 def genP(bigDelta, t_on, t_off):
