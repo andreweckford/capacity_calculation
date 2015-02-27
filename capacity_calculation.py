@@ -12,6 +12,8 @@ import numpy as np
 import sys
 from time import time
 
+#test
+
 def parseCommandLineArguments():
     if (len(sys.argv) < 6):
         print("Usage: python3 capacity_calculation.py (time step) (simulation time) (iterations) (outputs) (off probability) [flags]")
