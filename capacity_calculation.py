@@ -7,7 +7,8 @@ Created on Jan 5, 2015
 import genMarkov
 import sequence_probability as seq
 #import channelrhodopsin
-import acetylcholine
+#import acetylcholine
+import calmodulin
 import numpy as np
 import sys
 from time import time
@@ -95,7 +96,7 @@ def main():
     
     #maps = [[[0],[1],[2]],[[0,2],[1]]]
     #maps = [[[0],[1],[2],[3],[4]]]
-    [P,Px,maps] = acetylcholine.genP(bigDelta, bigDelta/p_off, bigDelta/(1-p_off))
+    [P,Px,maps] = calmodulin.genP(bigDelta, bigDelta/p_off, bigDelta/(1-p_off))
     mymap = maps[whichMap]
     allResults = []
 
