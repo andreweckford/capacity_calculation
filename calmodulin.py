@@ -12,7 +12,7 @@ def genP(bigDelta, t_on, t_off):
     
     maps = [[[0],[1],[2],[3],[4],[5],[6],[7],[8]],[[0,1,2,3],[4,5,6,7,8]]]
     
-    x_array = np.array([1e-7,5e-4])
+    x_array = np.array([1e-7,1e-6])
     
     # units are per second -- multiply by 1e-3 later to make them per ms
     kPlus1N = 7.7e8 # per mol
@@ -38,14 +38,18 @@ def genP(bigDelta, t_on, t_off):
         R = np.vstack((R,np.hstack((dMinus1,RN,dPlus2))))
         R = np.vstack((R,np.hstack((z,dMinus2,RN))))
         
-        # make diagonal equal to zero
+        # make row sum equal to zero
         R = R - np.diag(np.sum(R,axis=1))
         
         # scale per ms rather than per s
         R = R * (1e-3)
         
+        # watch out: some 
+        
         # append to P
         P.append(np.identity(9)+bigDelta*R)
+        if any([np.any(t < 0) for t in P]) or any([np.any(t > 1) for t in P]):
+            raise ValueError("Your parameters lead to an invalid transition probability matrix. Try decreasing time step.")
         
     return [P,Px,maps]
     

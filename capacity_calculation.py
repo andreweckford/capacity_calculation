@@ -6,8 +6,8 @@ Created on Jan 5, 2015
 
 import genMarkov
 import sequence_probability as seq
-#import channelrhodopsin
-#import acetylcholine
+import channelrhodopsin
+import acetylcholine
 import calmodulin
 import numpy as np
 import sys
@@ -16,23 +16,38 @@ from time import time
 #test
 
 def parseCommandLineArguments():
-    if (len(sys.argv) < 6):
-        print("Usage: python3 capacity_calculation.py (time step) (simulation time) (iterations) (outputs) (off probability) [flags]")
+    if ((len(sys.argv) < 6) and ('-d' not in sys.argv)):
+        print("Usage: python3 capacity_calculation.py (channel) (time step) (simulation time) (iterations) (outputs) (off probability) [flags]")
+        print("channel - which transduction channel to use, valid choices are ChR2, ACh, and CaM")
         print("time step - discretization interval (in ms)")
         print("simulation time - total amount of time for each run of the simulation (in ms)")
         print("iterations - number of simulation runs to average over (integer greater than 0)")
         print("outputs - 0 if the channel outputs are equal to the receptor state, 1 if the channel outputs are equal to the ion channel state")
         print("off probability - the iid probability that the illumination source is off in each discrete time interval")
         print("Flags:")
+        print('-d - debug, ignores other command line arguments, use at your own risk')
         print("-e - estimate the running time using these parameters, do not return a result")
         print('-t - append the running time to the result vector (has no effect if used with -e)')
         print('-v - append a variance estimate to the result vector (has no effect if used with -e)')
         exit()   
-    bigDelta = float(sys.argv[1])
-    simTime = int(sys.argv[2])
-    itr = int(sys.argv[3])
-    whichMap = int(sys.argv[4])
-    p_off = float(sys.argv[5])
+    
+    if '-d' in sys.argv:
+        debugFlag = True
+        whichChannel = None
+        bigDelta = None
+        simTime = None
+        itr = None
+        whichMap = None
+        p_off = None
+    else:
+        debugFlag = False
+        whichChannel = sys.argv[1]
+        bigDelta = float(sys.argv[2])
+        simTime = int(sys.argv[3])
+        itr = int(sys.argv[4])
+        whichMap = int(sys.argv[5])
+        p_off = float(sys.argv[6])
+    
     estimate = False
     simTimer = False
     varFlag = False
@@ -42,7 +57,8 @@ def parseCommandLineArguments():
         simTimer = True
     if '-v' in sys.argv:
         varFlag = True
-    return [bigDelta,simTime,itr,whichMap,p_off,estimate,simTimer,varFlag]
+    
+    return [bigDelta,simTime,itr,whichMap,p_off,estimate,simTimer,varFlag,debugFlag,whichChannel]
 
 def getEstimate(n,itr,nOld,itrOld,startTime,endTime):
     timeEstimate = (endTime - startTime)*(nOld*itrOld)/(n*itr)
@@ -84,19 +100,34 @@ def getEstimate(n,itr,nOld,itrOld,startTime,endTime):
 def main():
 
     startTime = time()
-    [bigDelta,simTime,itr,whichMap,p_off,estimate,simTimer,varFlag] = parseCommandLineArguments()
-    
-    n = int(simTime/bigDelta)
-    
+    [bigDelta,simTime,itr,whichMap,p_off,estimate,simTimer,varFlag,debugFlag,whichChannel] = parseCommandLineArguments()
+            
+    # give some default arguments for testing
+    if (debugFlag is True):
+        whichChannel = 'ACh'
+        n = 5000
+        itr = 10
+        bigDelta = 0.02
+        whichMap = 0
+        p_off = 0.9
+    else:
+        n = int(simTime/bigDelta)
+        
     if (estimate is True):
         nOld = n
         itrOld = itr
         n = 5000
         itr = 10
+                
+    if whichChannel is 'CaM':
+        [P,Px,maps] = calmodulin.genP(bigDelta, bigDelta/p_off, bigDelta/(1-p_off))
+    elif whichChannel is 'ACh':
+        [P,Px,maps] = acetylcholine.genP(bigDelta, bigDelta/p_off, bigDelta/(1-p_off))
+    elif whichChannel is 'ChR2':
+        [P,Px,maps] = channelrhodopsin.genP(bigDelta, bigDelta/p_off, bigDelta/(1-p_off))
+    else:
+        raise ValueError('Invalid channel choice')
     
-    #maps = [[[0],[1],[2]],[[0,2],[1]]]
-    #maps = [[[0],[1],[2],[3],[4]]]
-    [P,Px,maps] = calmodulin.genP(bigDelta, bigDelta/p_off, bigDelta/(1-p_off))
     mymap = maps[whichMap]
     allResults = []
 

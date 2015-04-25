@@ -27,5 +27,9 @@ def genP(bigDelta, t_on, t_off):
     P = []
     for i in range(0,len(lamb)):
         P.append(np.array([[1-lamb[i],lamb[i],0],[0,1-delta,delta],[chi,0,1-chi]]))
+        
+    if any([np.any(t < 0) for t in P]) or any([np.any(t > 1) for t in P]):
+        raise ValueError("Your parameters lead to an invalid transition probability matrix. Try decreasing time step.")
+
     return [P,Px,maps]
     

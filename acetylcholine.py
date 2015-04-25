@@ -40,6 +40,10 @@ def genP(bigDelta, t_on, t_off):
                       ])
         #print(R)
         P.append(np.identity(5) + bigDelta*R)
+
+    if any([np.any(t < 0) for t in P]) or any([np.any(t > 1) for t in P]):
+        raise ValueError("Your parameters lead to an invalid transition probability matrix. Try decreasing time step.")
+
     
     #print(P)
     return [P,Px,maps]
