@@ -16,7 +16,7 @@ from time import time
 #test
 
 def parseCommandLineArguments():
-    if ((len(sys.argv) < 6) and ('-d' not in sys.argv)):
+    if ((len(sys.argv) < 7) and ('-d' not in sys.argv)):
         print("Usage: python3 capacity_calculation.py (channel) (time step) (simulation time) (iterations) (outputs) (off probability) [flags]")
         print("channel - which transduction channel to use, valid choices are ChR2, ACh, and CaM")
         print("time step - discretization interval (in ms)")
