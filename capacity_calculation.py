@@ -118,12 +118,14 @@ def main():
         itrOld = itr
         n = 5000
         itr = 10
+    
+    print('x'+whichChannel+'x')
                 
-    if whichChannel is 'CaM':
+    if whichChannel == 'CaM':
         [P,Px,maps] = calmodulin.genP(bigDelta, bigDelta/p_off, bigDelta/(1-p_off))
-    elif whichChannel is 'ACh':
+    elif whichChannel == 'ACh':
         [P,Px,maps] = acetylcholine.genP(bigDelta, bigDelta/p_off, bigDelta/(1-p_off))
-    elif whichChannel is 'ChR2':
+    elif whichChannel == 'ChR2':
         [P,Px,maps] = channelrhodopsin.genP(bigDelta, bigDelta/p_off, bigDelta/(1-p_off))
     else:
         raise ValueError('Invalid channel choice')
