@@ -43,7 +43,7 @@ def parseCommandLineArguments():
         debugFlag = False
         whichChannel = sys.argv[1]
         bigDelta = float(sys.argv[2])
-        simTime = int(sys.argv[3])
+        simTime = float(sys.argv[3])
         itr = int(sys.argv[4])
         whichMap = int(sys.argv[5])
         p_off = float(sys.argv[6])
