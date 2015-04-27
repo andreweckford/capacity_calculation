@@ -119,8 +119,6 @@ def main():
         n = 5000
         itr = 10
     
-    print('x'+whichChannel+'x')
-                
     if whichChannel == 'CaM':
         [P,Px,maps] = calmodulin.genP(bigDelta, bigDelta/p_off, bigDelta/(1-p_off))
     elif whichChannel == 'ACh':
