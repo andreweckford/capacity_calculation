@@ -8,7 +8,7 @@ def parseCommandLineArguments():
         print("Any parameter, except channel, flags, and cores, can be specified with a step and range, in MATLAB notation.")
         print("However, range only (e.g., 0:1) is only valid with integers, and would normally be used only with outputs.")
         print("If cores is provided, then n scripts are generated, which may be executed simultaneously.")
-        print("The script has the name script.sh, or if n cores, script1.sh, ..., scriptn.sh")
+        print("The script has the name script1.sh, or if n cores, script1.sh, ..., scriptn.sh")
         exit()
         
     whichChannel = sys.argv[1]
@@ -101,8 +101,23 @@ def main():
                                         +' '+str(int(iterations))+' '+str(outputs)+' '+str(offProbability)+simTimerString+varFlagString)
                         
     
-    for t in commands:
-        print(t)
+    perCore = int(np.ceil(len(commands)/numCores))
+
+    for i in range(1,numCores+1):
+        scriptString = 'script'+str(i)+'.sh'
+        outFileString = ' result-'+whichChannel+'-'+str(i)+'.csv'
+        f = open(scriptString,'w')
+        #print('---'+scriptString+'---')
+        f.write('rm'+outFileString+' 2>/dev/null\n')
+        #print('rm'+outFileString+' 2>/dev/null')
+        f.write('touch'+outFileString+'\n')
+        #print('touch'+outFileString)
+
+        for j in range((i-1)*perCore,min([len(commands),i*perCore])):
+            f.write(commands[j]+' >>'+outFileString+'\n')
+            #print(commands[j]+' >>'+outFileString)
+            
+        f.close()
             
 if __name__ == "__main__":
     main()
