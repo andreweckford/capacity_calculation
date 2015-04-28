@@ -9,8 +9,21 @@ import numpy as np
 def genP(bigDelta, t_on, t_off):
     
     Px = np.array([[1-bigDelta/t_off,bigDelta/t_off],[bigDelta/t_on,1-bigDelta/t_on]])
+
+    # State numbering:
+    # Let (C,N) represent the number of bound sites at the C and N ends, respectively.
+    # Then
+    # 0 = (0,0)
+    # 1 = (0,1)
+    # 2 = (0,2)
+    # 3 = (1,0)
+    # 4 = (1,1)
+    # 5 = (1,2)
+    # 6 = (2,0)
+    # 7 = (2,1)
+    # 8 = (2,2)
     
-    maps = [[[0],[1],[2],[3],[4],[5],[6],[7],[8]],[[0,1,2,3],[4,5,6,7,8]]]
+    maps = [[[0],[1],[2],[3],[4],[5],[6],[7],[8]],[[0,1,3,4],[2,5],[6,7],[8]]]
     
     x_array = np.array([1e-7,1e-6])
     
