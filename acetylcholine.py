@@ -10,6 +10,13 @@ def genP(bigDelta, t_on, t_off):
     
     Px = np.array([[1-bigDelta/t_off,bigDelta/t_off],[bigDelta/t_on,1-bigDelta/t_on]])
     
+    # State numbering: (labels from Colquhoun and Hawkes, 1982)
+    # 0 = AR
+    # 1 = A2R
+    # 2 = A2T
+    # 3 = AT
+    # 4 = T
+    
     maps = [[[0],[1],[2],[3],[4]],[[0,1],[2,3,4]]]
 
     # parameter values taken from Colquhoun and Hawkes, 1982
