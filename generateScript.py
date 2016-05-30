@@ -98,7 +98,7 @@ def main():
                 for outputs in p[4][3]:
                     for offProbability in p[4][4]:
                         commands.append(pythonCommand+' capacity_calculation.py '+whichChannel+' '+str(timeStep)+' '+str(simulationTime)
-                                        +' '+str(int(iterations))+' '+str(outputs)+' '+str(offProbability)+simTimerString+varFlagString)
+                                        +' '+str(int(iterations))+' '+str(int(outputs))+' '+str(offProbability)+simTimerString+varFlagString)
                         
     
     perCore = int(np.ceil(len(commands)/numCores))
