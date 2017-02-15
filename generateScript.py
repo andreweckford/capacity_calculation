@@ -4,7 +4,7 @@ import numpy as np
 def parseCommandLineArguments():
     if len(sys.argv) < 7:
         print("Usage: python3 generateScript.py (channel) (time step) (simulation time) (iterations) (outputs) (off probability) [flags] [--cores=n] [--python=]")
-        print("Parameters and flags have the same meaning as in capacity_calculation; -e and -d are ignored.")
+        print("Parameters and flags have the same meaning as in capacity_calculation; -d is ignored.")
         print("Any parameter, except channel, flags, and cores, can be specified with a step and range, in MATLAB notation.")
         print("However, range only (e.g., 0:1) is only valid with integers, and would normally be used only with outputs.")
         print("If cores is provided, then n scripts are generated, which may be executed simultaneously.")
@@ -21,6 +21,11 @@ def parseCommandLineArguments():
         varFlag = True
     else:
         varFlag = False
+
+    if '-e' in sys.argv:
+        estFlag = True
+    else:
+        estFlag = False
     
     numCores = 1
     if any(['--cores=' in t for t in sys.argv]):
@@ -38,7 +43,7 @@ def parseCommandLineArguments():
     for i in range(2,7):
         parsedParameters.append(parseParameter(sys.argv[i]))
         
-    return (whichChannel,simTimer,varFlag,numCores,parsedParameters,pythonCommand)
+    return (whichChannel,simTimer,varFlag,numCores,parsedParameters,pythonCommand,estFlag)
 
 def parseParameter(p):
     # parses whether the parameter is scalar or a range
@@ -85,6 +90,11 @@ def main():
         varFlagString = ' -v'
     else:
         varFlagString = ''
+
+    if p[6] is True:
+        estFlagString = ' -e'
+    else:
+        estFlagString = ''
       
     numCores = p[3]
     
@@ -98,7 +108,7 @@ def main():
                 for outputs in p[4][3]:
                     for offProbability in p[4][4]:
                         commands.append(pythonCommand+' capacity_calculation.py '+whichChannel+' '+str(timeStep)+' '+str(simulationTime)
-                                        +' '+str(int(iterations))+' '+str(int(outputs))+' '+str(offProbability)+simTimerString+varFlagString)
+                                        +' '+str(int(iterations))+' '+str(int(outputs))+' '+str(offProbability)+simTimerString+varFlagString+estFlagString)
                         
     
     perCore = int(np.ceil(len(commands)/numCores))
