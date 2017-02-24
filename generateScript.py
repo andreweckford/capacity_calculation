@@ -102,11 +102,11 @@ def main():
 
     commands = []
 
-    for timeStep in p[4][0]:
-        for simulationTime in p[4][1]:
-            for iterations in p[4][2]:
-                for outputs in p[4][3]:
-                    for offProbability in p[4][4]:
+    for simulationTime in p[4][1]:
+        for iterations in p[4][2]:
+            for outputs in p[4][3]:
+                for offProbability in p[4][4]:
+                    for timeStep in p[4][0]:
                         commands.append(pythonCommand+' capacity_calculation.py '+whichChannel+' '+str(timeStep)+' '+str(simulationTime)
                                         +' '+str(int(iterations))+' '+str(int(outputs))+' '+str(offProbability)+simTimerString+varFlagString+estFlagString)
                         
