@@ -8,5 +8,5 @@ def parse_result(fname):
   for s in r:
     t = t + [[float(i) for i in s]]
 
-  fname.close()
+  csvf.close()
   return np.array(t)
