@@ -11,10 +11,14 @@ def set_parameters(bigDelta, t_on, t_off):
     tauOD = 20
     tauDC = 60
     
-    lamb = np.array([0,1-np.exp(-1*bigDelta/tauCO)])
-    delta = 1 - np.exp(-1*bigDelta/tauOD)
-    chi = 1 - np.exp(-1*bigDelta/tauDC)
+    #lamb = np.array([0,1-np.exp(-1*bigDelta/tauCO)])
+    #delta = 1 - np.exp(-1*bigDelta/tauOD)
+    #chi = 1 - np.exp(-1*bigDelta/tauDC)
     
+    lamb = np.array([0,bigDelta/tauCO])
+    delta = bigDelta/tauOD
+    chi = bigDelta/tauDC
+
     Px = np.array([[1-bigDelta/t_off,bigDelta/t_off],[bigDelta/t_on,1-bigDelta/t_on]])
     
     return [lamb,delta,chi,Px]
