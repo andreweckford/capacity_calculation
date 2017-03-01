@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from ChR2_MI import ChR2_MI
 
-# Generates Figure X from the paper
+# Generates figure tagged fig:MutualInformationFigure in the paper
 
 x = np.arange(0.001,0.2,0.001)
 plt.clf()
