@@ -43,5 +43,5 @@ touch result-ACh-4.csv
 ~/anaconda/bin/python3 capacity_calculation.py ACh 0.02 20000.0 500 1 0.99 >> result-ACh-4.csv
 
 rm result.csv 2>/dev/null
-cat result-ACh-1.csv result-ACh-2.csv result-ACh-3.csv result-ACh-4.csv > result.csv
+cat result-ACh-1.csv result-ACh-2.csv result-ACh-3.csv result-ACh-4.csv > result-ACh.csv
 ~/anaconda/bin/python3 AChFigure.py
