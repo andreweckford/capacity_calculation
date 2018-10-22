@@ -11,6 +11,7 @@ import acetylcholine
 import calmodulin
 import arbitrary
 import hessler
+import cftr
 import numpy as np
 import sys
 from time import time
@@ -131,6 +132,8 @@ def main():
         [P,Px,maps] = arbitrary.genP(bigDelta, bigDelta/p_off, bigDelta/(1-p_off))
     elif whichChannel == 'hessler':
         [P,Px,maps] = hessler.genP(bigDelta, bigDelta/p_off, bigDelta/(1-p_off))
+    elif whichChannel == 'CFTR':
+        [P,Px,maps] = cftr.genP(bigDelta, bigDelta/p_off, bigDelta/(1-p_off))
     else:
         raise ValueError('Invalid channel choice')
     
