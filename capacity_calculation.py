@@ -9,7 +9,6 @@ import sequence_probability as seq
 import channelrhodopsin
 import acetylcholine
 import calmodulin
-import arbitrary
 import numpy as np
 import sys
 from time import time
