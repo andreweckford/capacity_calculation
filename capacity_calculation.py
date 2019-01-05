@@ -10,8 +10,6 @@ import channelrhodopsin
 import acetylcholine
 import calmodulin
 import arbitrary
-import hessler
-import cftr
 import numpy as np
 import sys
 from time import time
@@ -21,7 +19,7 @@ from time import time
 def parseCommandLineArguments():
     if ((len(sys.argv) < 7) and ('-d' not in sys.argv)):
         print("Usage: python3 capacity_calculation.py (channel) (time step) (simulation time) (iterations) (outputs) (off probability) [flags]")
-        print("channel - which transduction channel to use, valid choices are CFTR, hessler, arb, ChR2, ACh, and CaM")
+        print("channel - which transduction channel to use, valid choices are ChR2, ACh, and CaM")
         print("time step - discretization interval (in ms)")
         print("simulation time - total amount of time for each run of the simulation (in ms)")
         print("iterations - number of simulation runs to average over (integer greater than 0)")
@@ -128,12 +126,6 @@ def main():
         [P,Px,maps] = acetylcholine.genP(bigDelta, bigDelta/p_off, bigDelta/(1-p_off))
     elif whichChannel == 'ChR2':
         [P,Px,maps] = channelrhodopsin.genP(bigDelta, bigDelta/p_off, bigDelta/(1-p_off))
-    elif whichChannel == 'arb':
-        [P,Px,maps] = arbitrary.genP(bigDelta, bigDelta/p_off, bigDelta/(1-p_off))
-    elif whichChannel == 'hessler':
-        [P,Px,maps] = hessler.genP(bigDelta, bigDelta/p_off, bigDelta/(1-p_off))
-    elif whichChannel == 'CFTR':
-        [P,Px,maps] = cftr.genP(bigDelta, bigDelta/p_off, bigDelta/(1-p_off))
     else:
         raise ValueError('Invalid channel choice')
     
